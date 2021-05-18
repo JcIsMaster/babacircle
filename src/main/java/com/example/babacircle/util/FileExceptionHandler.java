@@ -17,7 +17,7 @@ public class FileExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(value = MultipartException.class)
-    Result arithmeticExceptionException(MultipartException e, HttpServletRequest request) {
+    Result arithmeticExceptionException(final MultipartException e, HttpServletRequest request) {
         return new Result(-1,"上传单个文件大小只能上传30M","");
     }
 

@@ -36,7 +36,7 @@ public class DryCargoController {
     @ApiOperation(value = "查询所有干货信息",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/queryAllDryCargo")
-    public ResultLayUi queryAllDryCargo(DryGoodsVo dryGoodsVo, Integer page, Integer limit) throws Exception {
+    public ResultLayUi queryAllDryCargo(DryGoodsVo dryGoodsVo, Integer page, Integer limit) {
         return iDryCargoService.queryAllDryCargo(dryGoodsVo, page, limit);
     }
 
@@ -48,7 +48,7 @@ public class DryCargoController {
     @ApiOperation(value = "删除",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/deleteDryCargo")
-    public int deleteDryCargo(int id) throws Exception {
+    public int deleteDryCargo(int id) {
         return iDryCargoService.deleteDryCargo(id);
     }
 
@@ -82,7 +82,7 @@ public class DryCargoController {
     @ApiOperation(value = "发布干货帖子信息",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/releaseDryCargo")
-    public int releaseDryCargo(DryGoods dryGoods) {
+    public int releaseDryCargo(@RequestParam DryGoods dryGoods) {
         return iDryCargoService.releaseDryCargo(dryGoods);
     }
 

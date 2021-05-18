@@ -19,20 +19,18 @@ public interface DryCargoMapper extends BaseMapper<DryGoods> {
 
     /**
      * 查询所有干货信息
-     * @param title 标题
-     * @param userName 用户名
      * @return
      */
-    @Select("select a.*,b.tag_name,c.user_name from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id where a.is_delete=1 ${title} ${userName} order by a.create_at desc")
-    List<DryGoodsVo> queryAllDryCargo(@Param("title") String title,@Param("userName") String userName);
+    @Select("select a.*,b.tag_name,c.user_name from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id where a.is_delete=1 ${sql} order by a.create_at desc")
+    List<DryGoodsVo> queryAllDryCargo(@Param("sql") String sql);
 
     /**
      * 统计数量
-     * @param title 标题
+     * @param sql 拼接字段
      * @return
      */
-    @Select("select COALESCE(count(*),0) from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id where a.is_delete=1 ${title}")
-    int countAllDryCargo(@Param("title") String title);
+    @Select("select COALESCE(count(*),0) from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id where a.is_delete=1 ${sql}")
+    int countAllDryCargo(@Param("sql") String sql);
 
     /**
      * 根据帖子id查询该帖子点赞数量

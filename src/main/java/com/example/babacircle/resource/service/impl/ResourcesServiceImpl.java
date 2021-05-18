@@ -40,7 +40,6 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
         PageHelper.startPage(page,limit);
         String sql="";
 
-
         if(resources.getTitle()!=null && !resources.getTitle().equals("")){
             sql+=" and a.title like '%"+resources.getTitle()+"%'";
         }
@@ -51,26 +50,11 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
         }
 
 
-
-        //将时间格式转换为时间戳
-        //开始时间
-      /*  if(!startTime.equals("undefined") && !endTime.equals("undefined") && !startTime.equals("null") && !endTime.equals("null")){
-            if(!startTime.equals("") && !endTime.equals("")){
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String startTimes=String.valueOf(sdf.parse(startTime).getTime() / 1000);
-
-                //结束时间
-                SimpleDateFormat sdftwo = new SimpleDateFormat("yyyy-MM-dd");
-                String endTimes=String.valueOf(sdftwo.parse(endTime).getTime() / 1000);
-
-                if(!"undefined".equals(startTime) && !endTime.equals("undefined") ){
-                    sql+="and a.create_at>= "+startTimes+" and a.create_at<="+endTimes+"";
-                }
-            }
-        }*/
-
-
         List<ResourcesLabelVo> resourcesLabelVos = resourcesMapper.selectResourcesAllPosting(sql);
+        for (int i=0;i<resourcesLabelVos.size();i++){
+            String[] strings = resourcesMapper.queryImgById(resourcesLabelVos.get(i).getId());
+            resourcesLabelVos.get(i).setImg(strings);
+        }
 
         //根据不同条件得到不同帖子数量
         Integer integer = resourcesMapper.selectResourcesAllPostingCount(sql);
@@ -106,11 +90,27 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
             img.setZId(resources.getId());
             img.setCreateAt(System.currentTimeMillis() / 1000 + "");
             for (int i = 0; i < resources.getImg().length; i++) {
+                System.out.println(resources.getImg()[i]);
                 img.setImgUrl(resources.getImg()[i]);
                 int addImg = resourcesMapper.addImg(img);
             }
 
         }
+        return 1;
+    }
+
+    @Override
+    public int updateResourcesPost(Resources resources) {
+        UpdateWrapper<Resources> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.eq("id",resources.getId()).set("cover",resources.getCover()).set("title",resources.getTitle());
+
+        int update = baseMapper.update(null, updateWrapper);
+
+
+        int i1 = resourcesMapper.deleteResourceImg(resources.getId());
+
+
+        int i = resourcesMapper.addResourceImg(resources.getId(), resources.getImg(), System.currentTimeMillis() / 1000 + "", 0);
 
         return 1;
     }

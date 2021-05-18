@@ -39,13 +39,13 @@ public class ResourcesController {
 
     /**
      * 后台
-     * 批量删除帖子
+     * 删除帖子
      * @return
      */
-    @ApiOperation(value = "批量删除帖子",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "删除帖子",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/resourcesDeletes")
-    public Integer resourcesDeletes(int id) throws ParseException {
+    public Integer resourcesDeletes(int id) {
         return  iResourcesService.resourcesDeletes(id);
     }
 
@@ -57,8 +57,20 @@ public class ResourcesController {
     @ApiOperation(value = "增加资源帖子",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/addResourcesPost")
-    public int addResourcesPost(Resources resources) throws Exception {
+    public int addResourcesPost(Resources resources) {
         return iResourcesService.addResourcesPost(resources);
+    }
+
+    /**
+     *
+     * 修改资源帖子  后台
+     * @return
+     */
+    @ApiOperation(value = "修改资源帖子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/updateResourcesPost")
+    public int updateResourcesPost(Resources resources){
+        return iResourcesService.updateResourcesPost(resources);
     }
 
 }

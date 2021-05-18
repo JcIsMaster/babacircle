@@ -1,6 +1,11 @@
 package com.example.babacircle.circle.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * @author MQ
@@ -8,11 +13,15 @@ import lombok.Data;
  * 圈子实体类
  */
 @Data
-public class Circle {
+@TableName("tb_circles")
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
+public class Circle extends Model<Circle> {
 
     /**
      * ID
      */
+    @TableId
     private int id;
 
     /**

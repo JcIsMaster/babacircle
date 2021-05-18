@@ -17,4 +17,11 @@ public interface IUploadService {
      * @return
      */
     Map<String,Object> uploadConimagea(MultipartFile file);
+
+    /**
+     * 删除服务器文件
+     * @param type
+     * @param imgUrl
+     */
+    int deleteFile(int type,String imgUrl);
 }

@@ -35,21 +35,21 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
 
     @Override
     public ResultLayUi queryAllDryCargo(DryGoodsVo dryGoodsVo, Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
 
-        String title="";
+
+        String sql="";
         if(!"undefined".equals(dryGoodsVo.getTitle()) && dryGoodsVo.getTitle()!=null){
-            title=" and a.title like '%"+dryGoodsVo.getTitle()+"%'";
+            sql=" and a.title like '%"+dryGoodsVo.getTitle()+"%'";
         }
 
 
-        String userName="";
         if(!"undefined".equals(dryGoodsVo.getUserName()) && dryGoodsVo.getUserName()!=null){
-            userName=" and c.user_name like '%"+dryGoodsVo.getUserName()+"%'";
+            sql=" and c.user_name like '%"+dryGoodsVo.getUserName()+"%'";
         }
 
         //查询所有
-        List<DryGoodsVo> dryGoodsVos = dryCargoMapper.queryAllDryCargo(title,userName);
+        PageHelper.startPage(page,limit);
+        List<DryGoodsVo> dryGoodsVos = dryCargoMapper.queryAllDryCargo(sql);
         for (int i=0;i<dryGoodsVos.size();i++){
             //得到点赞数量
             int i1 = dryCargoMapper.countPostGiveNumber(dryGoodsVos.get(i).getId());
@@ -59,13 +59,14 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
             int i2 = dryCargoMapper.countPostCollectNumber(dryGoodsVos.get(i).getId());
             dryGoodsVos.get(i).setCollect(i2);
 
+            //得到评论数量
             int i3 = dryCargoMapper.countPostCommentNumber(dryGoodsVos.get(i).getId());
             dryGoodsVos.get(i).setCommentNumber(i3);
         }
 
 
         //统计
-        int i = dryCargoMapper.countAllDryCargo(title);
+        int i = dryCargoMapper.countAllDryCargo(sql);
 
         ResultLayUi resultLayUi=new ResultLayUi();
         resultLayUi.setCode(0);
@@ -113,6 +114,12 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
 
     @Override
     public int releaseDryCargo(DryGoods dryGoods) {
+        System.out.println(dryGoods.getUId());
+        System.out.println(dryGoods.getTagsTwo());
+        if(dryGoods.getUId()==0 || dryGoods.getTagsTwo()==0){
+            return 0;
+        }
+
         dryGoods.setIsDelete(1);
         dryGoods.setCreateAt(System.currentTimeMillis()/1000+"");
         int insert = baseMapper.insert(dryGoods);

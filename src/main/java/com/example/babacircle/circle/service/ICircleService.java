@@ -18,4 +18,26 @@ public interface ICircleService {
      * @return
      */
     ResultLayUi selectAllPosting(Circle circle, Integer page, Integer limit, String userName);
+
+    /**
+     * 增加圈子
+     * @param circle
+     * @return
+     */
+    int addCirclePost(Circle circle);
+
+    /**
+     * 修改圈子
+     * @param circle
+     * @return
+     */
+    int updateCirclePost(Circle circle);
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    Integer cirCleDeletes(int id);
+
 }

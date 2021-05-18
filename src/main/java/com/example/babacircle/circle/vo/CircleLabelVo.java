@@ -65,6 +65,11 @@ public class CircleLabelVo {
     private int collect;
 
     /**
+     * 封面
+     */
+    private String cover;
+
+    /**
      * 浏览记录
      */
     private int browse;

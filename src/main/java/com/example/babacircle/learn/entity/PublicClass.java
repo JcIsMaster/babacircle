@@ -8,19 +8,20 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @author JC
+ * @author MQ
+ * @date 2021/5/7 15:24
  */
 @Data
-@TableName("tb_dry_goods")
+@TableName("tb_public_class")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-public class DryGoods extends Model<DryGoods> {
+public class PublicClass extends Model<PublicClass> {
 
     @TableId
     private int id;
 
     /**
-     * 发帖人id
+     * 公开课发布人id
      */
     private int uId;
 
@@ -43,33 +44,40 @@ public class DryGoods extends Model<DryGoods> {
      * 单元体类型id
      */
     private int haplontId;
-    /**
-     * 点赞数量
-     */
-    private int favour;
-    /**
-     * 收藏数量
-     */
-    private int collect;
-    /**
-     * 描述
-     */
-    private String description;
+
     /**
      * 封面图
      */
     private String coverImg;
+
     /**
-     * 内容
+     * 课程列表
      */
-    private String content;
+    private String classList;
+
     /**
-     * 删除状态1:有效；0:无效； 默认1
+     * 公开课价格 0为免费内容
      */
-    private int isDelete;
+    private int price;
+
+    /**
+     * 收藏数量
+     */
+    private int collect;
+
+    /**
+     * 公开课购买人数
+     */
+    private int buyerNum;
+
     /**
      * 发布时间
      */
     private String createAt;
+
+    /**
+     * 删除状态1:有效；0:无效； 默认1
+     */
+    private int isDelete;
     
 }

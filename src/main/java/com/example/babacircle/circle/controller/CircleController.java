@@ -7,8 +7,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import lombok.extern.slf4j.Slf4j;
+import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 
 /**
  * @author MQ
@@ -37,5 +40,41 @@ public class CircleController {
         ResultLayUi resultLayUi = iCircleService.selectAllPosting(circle, page, limit, userName);
 
         return resultLayUi;
+    }
+
+    /**
+     *
+     *  增加圈子帖子
+     * @return
+     */
+    @ApiOperation(value = "增加圈子帖子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/addCirclePost")
+    public int addCirclePost(Circle circle) {
+        return iCircleService.addCirclePost(circle);
+    }
+
+    /**
+     *
+     *  修改圈子帖子
+     * @return
+     */
+    @ApiOperation(value = "修改圈子帖子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/updateCirclePost")
+    public int updateCirclePost(Circle circle)  {
+        return iCircleService.updateCirclePost(circle);
+    }
+
+    /**
+     * 后台
+     * 删除帖子
+     * @return
+     */
+    @ApiOperation(value = "删除帖子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/cirCleDeletes")
+    public Integer cirCleDeletes(int id) {
+        return  iCircleService.cirCleDeletes(id);
     }
 }

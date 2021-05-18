@@ -29,9 +29,16 @@ public interface IResourcesService {
     Integer resourcesDeletes(int id);
 
     /**
-     *
+     * 增加资源帖子
      * @param resources
      * @return
      */
     int addResourcesPost(Resources resources);
+
+    /**
+     * 修改资源帖子
+     * @param resources
+     * @return
+     */
+    int updateResourcesPost(Resources resources);
 }

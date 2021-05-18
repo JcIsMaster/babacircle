@@ -4,6 +4,7 @@ import com.example.babacircle.upload.service.IUploadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,14 @@ public class UploadController {
     public Map<String,Object> uploadConimagea(@RequestParam("file") MultipartFile file) {
         Map<String, Object> map = iUploadService.uploadConimagea(file);
         return map;
+    }
+
+    @ApiOperation(value = "删除服务器图片", notes = "删除服务器图片")
+    @ResponseBody
+    @PostMapping("/deleteFile")
+    public int deleteFile(int type,String imgUrl) {
+
+       return iUploadService.deleteFile(type,imgUrl);
     }
 
 
