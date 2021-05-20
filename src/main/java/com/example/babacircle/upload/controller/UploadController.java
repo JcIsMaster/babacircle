@@ -32,7 +32,7 @@ public class UploadController {
 
     @PostMapping("uploadConimagea")
     @ResponseBody
-    public Map<String,Object> uploadConimagea(@RequestParam("file") MultipartFile file) {
+    public Map<String,Object> uploadConimagea(MultipartFile file) {
         Map<String, Object> map = iUploadService.uploadConimagea(file);
         return map;
     }

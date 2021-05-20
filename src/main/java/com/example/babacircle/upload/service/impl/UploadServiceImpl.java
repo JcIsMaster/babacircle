@@ -47,8 +47,9 @@ public class UploadServiceImpl implements IUploadService {
                 System.out.println("jin");
                 visbit="video";
             }
+            System.out.println(newfilename);
             //图片保存的地址
-            Path path = Paths.get("e:/file/"+visbit+"/"+ newfilename);
+            Path path = Paths.get("e:/file/"+visbit+"/"+newfilename+"."+suffixName);
 
 
             //文件不存在就创建
@@ -60,16 +61,17 @@ public class UploadServiceImpl implements IUploadService {
 
             //得到上传图片之后的图片
             //图片访问地址
-            urlpat="https://www.gofatoo.com/"+visbit+"/"+newfilename;
-
+            urlpat="https://www.gofatoo.com/"+visbit+"/"+newfilename+"."+suffixName;
+            System.out.println(urlpat);
             List<String> list=new ArrayList<String>();
             list.add(urlpat);
             mv.put("data", list);
-            mv.put("success", 0);
+            mv.put("errno", 0);
+            /*mv.put("success", 0);*/
             return mv;
         } catch (Exception e) {
             e.printStackTrace();
-            mv.put("errno", 1);
+            mv.put("success", 1);
             return mv;
         }
     }

@@ -82,7 +82,7 @@ public class DryCargoController {
     @ApiOperation(value = "发布干货帖子信息",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/releaseDryCargo")
-    public int releaseDryCargo(@RequestParam DryGoods dryGoods) {
+    public int releaseDryCargo(DryGoods dryGoods) {
         return iDryCargoService.releaseDryCargo(dryGoods);
     }
 

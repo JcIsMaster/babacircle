@@ -97,6 +97,7 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
 
     @Override
     public int updateDryCargo(DryGoods dryGoods) {
+        System.out.println(dryGoods.getTagsTwo());
         UpdateWrapper<DryGoods> wrapper = new UpdateWrapper<>();
         wrapper.eq("id", dryGoods.getId()).set("title", dryGoods.getTitle())
                 .set("cover_img",dryGoods.getCoverImg()).set("content",dryGoods.getContent())
@@ -114,8 +115,6 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
 
     @Override
     public int releaseDryCargo(DryGoods dryGoods) {
-        System.out.println(dryGoods.getUId());
-        System.out.println(dryGoods.getTagsTwo());
         if(dryGoods.getUId()==0 || dryGoods.getTagsTwo()==0){
             return 0;
         }

@@ -21,7 +21,7 @@ public interface DryCargoMapper extends BaseMapper<DryGoods> {
      * 查询所有干货信息
      * @return
      */
-    @Select("select a.*,b.tag_name,c.user_name from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id where a.is_delete=1 ${sql} order by a.create_at desc")
+    @Select("select a.id,a.title,a.favour,a.collect,a.description,a.cover_img,a.content,a.create_at,b.tag_name,c.user_name from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id where a.is_delete=1 ${sql} order by a.create_at desc ")
     List<DryGoodsVo> queryAllDryCargo(@Param("sql") String sql);
 
     /**
