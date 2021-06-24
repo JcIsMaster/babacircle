@@ -44,4 +44,30 @@ public class UserController {
         ResultLayUi resultLayUi = iUserService.selectUserNamePassword(userName, password);
         return resultLayUi;
     }
+
+    @ApiOperation(value = "查询单个用户", notes = "查询用户名密码")
+    @ResponseBody
+    @PostMapping("/selectUserById")
+    public User selectUserById(int userId) {
+        return iUserService.selectUserById(userId);
+    }
+
+    @ApiOperation(value = "批量删除用户", notes = "查询用户名密码")
+    @ResponseBody
+    @PostMapping("/batchDeleteUsers")
+    public int batchDeleteUsers(@RequestParam("id") Integer[] id) {
+        return iUserService.batchDeleteUsers(id);
+    }
+
+    @ApiOperation(value = "修改用户信息", notes = "查询用户名密码")
+    @ResponseBody
+    @PostMapping("/updateUser")
+    public int updateUser(User user) {
+        return iUserService.updateUser(user);
+    }
+
+
+
+
+
 }

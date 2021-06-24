@@ -52,7 +52,7 @@ public class Circle extends Model<Circle> {
     /**
      * 用户id
      */
-    private int uId;
+    private int userId;
 
 
     /**

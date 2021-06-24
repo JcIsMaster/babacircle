@@ -27,4 +27,25 @@ public interface IUserService {
      * @return
      */
     ResultLayUi selectUserNamePassword(String userName,  String password);
+
+    /**
+     * 查询单个用户
+     * @param userId
+     * @return
+     */
+    User selectUserById(int userId);
+
+    /**
+     * 批量删除用户
+     * @param id
+     * @return
+     */
+    int batchDeleteUsers(@RequestParam("id") Integer[] id);
+
+    /**
+     * 修改用户信息
+     * @param id
+     * @return
+     */
+    int updateUser(User user);
 }

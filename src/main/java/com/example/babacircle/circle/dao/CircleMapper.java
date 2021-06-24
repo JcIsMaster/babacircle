@@ -2,6 +2,8 @@ package com.example.babacircle.circle.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.babacircle.circle.entity.Circle;
+import com.example.babacircle.circle.entity.Haplont;
+import com.example.babacircle.circle.vo.CircleClassificationVo;
 import com.example.babacircle.circle.vo.CircleLabelVo;
 import com.example.babacircle.resource.entity.Img;
 import org.apache.ibatis.annotations.*;
@@ -21,25 +23,37 @@ public interface CircleMapper extends BaseMapper<Circle> {
      * @param sql 条件拼接
      * @return
      */
-    @Select("select a.cover,a.id,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
-            "from tb_circles a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tag b on a.tags_one=b.id " +
-            "where a.is_delete=1 ${sql} ORDER BY a.create_at desc")
-    List<CircleLabelVo> selectAllPosting(@Param("sql") String sql);
+    @Select({"<script>"+
+            "select a.cover,a.id,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
+            "from tb_circles a INNER JOIN tb_user c on a.user_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id " +
+            "where a.is_delete=1" +
+            "<if test='circle.tagsTwo!=0'>" +
+            " and tags_two=${circle.tagsTwo} " +
+            "</if>" +
+            "${sql} ORDER BY a.create_at desc" +
+            "</script>"})
+    List<CircleLabelVo> selectAllPosting(@Param("sql") String sql,@Param("circle") Circle circle);
 
     /**
      * 根据条件统计数量
      * @param sql
      * @return
      */
-    @Select("select COALESCE(count(*),0) from tb_circles a INNER JOIN tb_tags b on a.tags_two=b.id INNER JOIN tb_user c on a.u_id=c.id where a.is_delete=1 ${sql}")
-    Integer selectAllPostingCount(@Param("sql") String sql);
+    @Select({"<script>"+
+            "select COALESCE(count(*),0) from tb_circles a INNER JOIN tb_tags b on a.tags_two=b.id INNER JOIN tb_user c on a.user_id=c.id where a.is_delete=1" +
+            "<if test='tagsTwo!=0'>" +
+            " and tags_two=${tagsTwo}" +
+            "</if>" +
+            " ${sql}" +
+            "</script>"})
+    Integer selectAllPostingCount(@Param("sql") String sql,@Param("tagsTwo") int tagsTwo);
 
     /**
      * 增加圈子帖子
      * @param circle
      * @return
      */
-    @Insert("insert into tb_circles(content,tags_one,tags_two,type,video,cover,create_at,u_id,title,haplont_type)values(#{circle.content},${circle.tagsOne},${circle.tagsTwo},${circle.type},#{circle.video},#{circle.cover},#{circle.createAt},${circle.uId},#{circle.title},${circle.haplontType})")
+    @Insert("insert into tb_circles(content,tags_one,tags_two,type,video,cover,create_at,user_id,title,haplont_type)values(#{circle.content},${circle.tagsOne},${circle.tagsTwo},${circle.type},#{circle.video},#{circle.cover},#{circle.createAt},${circle.userId},#{circle.title},${circle.haplontType})")
     @Options(useGeneratedKeys=true, keyProperty="circle.id",keyColumn="id")
     int addCirclePost(@Param("circle") Circle circle);
 
@@ -68,6 +82,14 @@ public interface CircleMapper extends BaseMapper<Circle> {
     int deleteResourceImg(@Param("id") int id);
 
     /**
+     * 批量删除
+     * @param id
+     * @return
+     */
+    @Update("update tb_circles set is_delete=0 where id = ${id}")
+    Integer deletes(@Param("id") int id);
+
+    /**
      * 批量增加图片
      * @param zId 帖子id
      * @param imgUrl 图片地址
@@ -82,4 +104,33 @@ public interface CircleMapper extends BaseMapper<Circle> {
             "</foreach>" +
             "</script>")
     int addCircleImg(@Param("zId") int zId, @Param("imgUrl") String[] imgUrl,@Param("createAt") String createAt,@Param("postType") int postType);
+
+    /**
+     * 根据标签id查询单元体导航栏
+     * @param tagId 标签id
+     * @return
+     */
+    @Select("SELECT a.id,a.h_name FROM `tb_haplont` a INNER JOIN tb_tag_haplont b on  a.id=b.haplont_id where b.tag_id=${tagId}")
+    List<Haplont> selectHaplontByTagId(@Param("tagId") int tagId);
+
+    /**
+     * 查询单个圈子的帖子
+     * @param id 帖子id
+     * @return
+     */
+    @Select("select a.type,a.forwarding_number,a.id,a.content,a.browse,a.video,a.cover,a.create_at,b.tag_name,b.id as tagId,a.haplont_type" +
+            ",c.avatar,c.id as uId,c.user_name,  ifnull(d.giveNumber,0) as giveNumber ,ifnull(e.uu,0) as numberPosts " +
+            " from tb_circles a LEFT JOIN (select count(*) as giveNumber,zq_id from tb_circles_give where give_cancel=1 GROUP BY zq_id) d on a.id=d.zq_id " +
+            "LEFT JOIN (select COALESCE(count(*),0) as uu,t_id from tb_comment GROUP BY t_id) e on a.id=e.t_id " +
+            "INNER JOIN tb_user c on a.user_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id  " +
+            " where a.id=${id} and a.is_delete=1")
+    CircleClassificationVo querySingleCircle(@Param("id") int id);
+
+    /**
+     * 根据帖子id查询当前帖子图片
+     * @param id
+     * @return
+     */
+    @Select("select img_url from tb_img where z_id=${id} and type=1")
+    String[] selectImgByPostId(@Param("id") int id);
 }

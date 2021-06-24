@@ -22,7 +22,7 @@ public interface TagMapper {
      * @param type 0资源 1圈子
      * @return
      */
-    @Select("select * from tb_tag where is_delete=1 and type=${type}")
+    @Select("select * from tb_tags where is_delete=1 and type=${type}")
     List<Tag> selectResourcesAllTag(@Param("type") int type);
 
     /**

@@ -27,11 +27,6 @@ public class TagServiceImpl implements ITagService {
     @Override
     public List<Tag> selectResourcesAllTag(int type) {
         List<Tag> tags = tagMapper.selectResourcesAllTag(type);
-        for (int i=0;i<tags.size();i++){
-            if("人才".equals(tags.get(i).getTagName())){
-                tags.remove(i);
-            }
-        }
         return tags;
     }
 
