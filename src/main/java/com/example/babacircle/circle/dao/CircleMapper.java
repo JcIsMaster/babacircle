@@ -97,12 +97,12 @@ public interface CircleMapper extends BaseMapper<Circle> {
      * @param postType 帖子类型
      * @return
      */
-    @Insert("<script>" +
+    @Insert({"<script>" +
             "insert into tb_img(z_id,img_url,type,create_at) VALUES  " +
             "<foreach collection='imgUrl' item='item' index='index' separator=','>" +
             "(${zId},#{item},${postType},#{createAt})" +
             "</foreach>" +
-            "</script>")
+            "</script>"})
     int addCircleImg(@Param("zId") int zId, @Param("imgUrl") String[] imgUrl,@Param("createAt") String createAt,@Param("postType") int postType);
 
     /**

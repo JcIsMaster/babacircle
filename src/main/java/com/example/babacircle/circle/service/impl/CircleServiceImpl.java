@@ -130,13 +130,19 @@ public class CircleServiceImpl extends ServiceImpl<CircleMapper, Circle> impleme
         .set("tags_two",circle.getTagsTwo()).set("haplont_type",circle.getHaplontType()).set("video",circle.getVideo());
 
         int update = baseMapper.update(null, updateWrapper);
+        if(update<=0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"修改失败");
+        }
 
         int i = circleMapper.deleteResourceImg(circle.getId());
-
+        if(i<=0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"删除关系失败");
+        }
 
         int i1 = circleMapper.addCircleImg(circle.getId(), circle.getImg(), System.currentTimeMillis() / 1000 + "", 1);
-
-
+        if(i1<=0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR);
+        }
         return i1;
     }
 
