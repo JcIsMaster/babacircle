@@ -28,6 +28,7 @@ public class User extends Model<User> {
 
 	/**
 	 * 性别
+	 * 1男 0女
 	 */
 	String userSex;
 

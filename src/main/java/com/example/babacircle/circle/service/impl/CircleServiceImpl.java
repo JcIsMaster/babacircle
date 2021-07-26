@@ -128,7 +128,7 @@ public class CircleServiceImpl extends ServiceImpl<CircleMapper, Circle> impleme
         UpdateWrapper<Circle> updateWrapper=new UpdateWrapper();
         updateWrapper.eq("id",circle.getId()).set("cover",circle.getCover()).set("content",circle.getContent())
         .set("tags_two",circle.getTagsTwo()).set("haplont_type",circle.getHaplontType()).set("video",circle.getVideo());
-
+        System.out.println(circle.toString());
         int update = baseMapper.update(null, updateWrapper);
         if(update<=0){
             throw new ApplicationException(CodeType.SERVICE_ERROR,"修改失败");

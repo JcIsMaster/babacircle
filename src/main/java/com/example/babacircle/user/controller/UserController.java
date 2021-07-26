@@ -63,6 +63,8 @@ public class UserController {
     @ResponseBody
     @PostMapping("/updateUser")
     public int updateUser(User user) {
+        System.out.println(user.toString());
+        System.out.println(iUserService.updateUser(user));
         return iUserService.updateUser(user);
     }
 
