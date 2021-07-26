@@ -44,7 +44,7 @@ public interface IUserService {
 
     /**
      * 修改用户信息
-     * @param id
+     * @param user
      * @return
      */
     int updateUser(User user);
