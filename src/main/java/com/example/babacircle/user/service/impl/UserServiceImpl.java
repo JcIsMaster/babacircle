@@ -100,8 +100,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public int updateUser(User user) {
         UpdateWrapper<User> userUpdateWrapper=new UpdateWrapper<>();
         userUpdateWrapper.eq("id",user.getId()).set("user_name",user.getUserName()).set("user_sex",user.getUserSex())
-                .set("avatar",user.getAvatar());
-
+                .set("avatar",user.getAvatar()).set("birthday",user.getBirthday()).set("email",user.getEmail())
+                .set("mobile",user.getMobile()).set("introduce",user.getIntroduce());
         int update = baseMapper.update(null, userUpdateWrapper);
         if(update<=0){
             throw new ApplicationException(CodeType.SERVICE_ERROR,"修改失败");

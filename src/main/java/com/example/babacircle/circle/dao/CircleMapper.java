@@ -110,7 +110,8 @@ public interface CircleMapper extends BaseMapper<Circle> {
      * @param tagId 标签id
      * @return
      */
-    @Select("SELECT a.id,a.h_name FROM `tb_haplont` a INNER JOIN tb_tag_haplont b on  a.id=b.haplont_id where b.tag_id=${tagId}")
+
+    @Select("SELECT a.id,a.h_name FROM `tb_haplont` a INNER JOIN tb_tag_haplont b on  a.id=b.haplont_id where b.tag_id=${tagId} and a.id>2")
     List<Haplont> selectHaplontByTagId(@Param("tagId") int tagId);
 
     /**

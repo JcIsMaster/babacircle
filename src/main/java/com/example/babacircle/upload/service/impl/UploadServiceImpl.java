@@ -34,9 +34,9 @@ public class UploadServiceImpl implements IUploadService {
 
         try {
             ////Calendar.getInstance()是获取一个Calendar对象并可以进行时间的计算，时区的指定
-            Calendar date = Calendar.getInstance();
-            //获得文件最初的路径
-            String originalFile = file.getOriginalFilename();
+//            Calendar date = Calendar.getInstance();
+//            //获得文件最初的路径
+//            String originalFile = file.getOriginalFilename();
             //UUID转化为String对象
             String newfilename=System.currentTimeMillis()/1000+""+getRandomInt(10000, 99999);
             String fileName = file.getOriginalFilename();
