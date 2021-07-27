@@ -17,6 +17,7 @@ public interface IResourcesService {
      * @param page
      * @param limit
      * @param userName
+     * @throws ParseException
      * @return
      */
     ResultLayUi selectResourcesAllPosting(Resources resources, Integer page, Integer limit, String userName) throws ParseException;
