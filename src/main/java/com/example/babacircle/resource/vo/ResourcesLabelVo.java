@@ -24,16 +24,6 @@ public class ResourcesLabelVo {
     private String userName;
 
     /**
-     * 发帖人电话号码
-     */
-    private String mobile;
-
-    /**
-     * 发帖人邮箱
-     */
-    private String email;
-
-    /**
      * 标签名字
      */
     private String tagName;

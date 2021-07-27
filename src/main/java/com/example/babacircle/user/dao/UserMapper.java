@@ -20,7 +20,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param sql 拼接的参数
      * @return
      */
-    @Select("select id,user_name,user_sex,avatar,create_at,m_code,is_delete,open_id,introduce,m_code from tb_user  ${sql} order by create_at desc")
+    @Select("select id,user_name,user_sex,avatar,mobile,email,create_at,m_code,is_delete,open_id,introduce,m_code from tb_user  ${sql} order by create_at desc")
     List<User> queryAllUserForSql(@Param("sql")String sql);
 
     /**

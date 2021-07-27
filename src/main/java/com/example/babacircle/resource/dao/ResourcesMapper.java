@@ -22,7 +22,7 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
      * @param sql 条件
      * @return
      */
-    @Select("select a.id,a.cover,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name,c.mobile,c.email " +
+    @Select("select a.id,a.cover,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
             "from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where a.is_delete=1 order by a.create_at desc ${sql}")
     List<ResourcesLabelVo> selectResourcesAllPosting(@Param("sql") String sql);
 
