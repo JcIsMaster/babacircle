@@ -23,6 +23,13 @@ public interface IResourcesService {
     ResultLayUi selectResourcesAllPosting(Resources resources, Integer page, Integer limit, String userName) throws ParseException;
 
     /**
+     * 根据id查询资源帖子
+     * @param id
+     * @return
+     */
+    Resources selectResourcesById(int id);
+
+    /**
      * 删除
      * @param id
      * @return

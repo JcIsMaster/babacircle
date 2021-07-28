@@ -69,6 +69,15 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
     }
 
     @Override
+    public Resources selectResourcesById(int id) {
+        Resources resources = baseMapper.selectById(id);
+        if (resources != null){
+            resources.setImg(resourcesMapper.queryImgById(resources.getId()));
+        }
+        return resources;
+    }
+
+    @Override
     public Integer resourcesDeletes(int id) {
         UpdateWrapper<Resources> updateWrapper=new UpdateWrapper<>();
         updateWrapper.eq("id",id).set("is_delete",0);

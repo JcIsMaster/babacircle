@@ -37,6 +37,13 @@ public class ResourcesController {
         return iResourcesService.selectResourcesAllPosting(resources,page,limit,userName);
     }
 
+    @ApiOperation(value = "根据id查询资源帖子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/selectResourcesById")
+    public Resources selectResourcesById(int id){
+        return iResourcesService.selectResourcesById(id);
+    }
+
     /**
      * 后台
      * 删除帖子

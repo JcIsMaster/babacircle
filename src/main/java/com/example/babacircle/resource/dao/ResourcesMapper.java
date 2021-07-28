@@ -23,8 +23,10 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
      * @return
      */
     @Select("select a.id,a.cover,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
-            "from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where a.is_delete=1 order by a.create_at desc ${sql}")
+            "from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where a.is_delete=1 ${sql} order by a.create_at desc")
     List<ResourcesLabelVo> selectResourcesAllPosting(@Param("sql") String sql);
+
+
 
     /**
      * 根据条件统计数量
@@ -39,7 +41,7 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
      * @param resources
      * @return
      */
-    @Insert("insert into tb_resources(content,tags_one,tags_two,type,video,cover,create_at,u_id,title,haplont_type)values(#{resources.content},${resources.tagsOne},${resources.tagsTwo},${resources.type},#{resources.video},#{resources.cover},#{resources.createAt},${resources.uId},#{resources.title},${resources.haplontType})")
+    @Insert("insert into tb_resources(content,tags_one,tags_two,type,video,cover,create_at,u_id,title)values(#{resources.content},${resources.tagsOne},${resources.tagsTwo},${resources.type},#{resources.video},#{resources.cover},#{resources.createAt},${resources.uId},#{resources.title})")
     @Options(useGeneratedKeys=true, keyProperty="resources.id",keyColumn="id")
     int addResourcesPost(@Param("resources") Resources resources);
 
