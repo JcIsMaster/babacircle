@@ -20,7 +20,7 @@ public class Question extends Model<Question> {
     /**
      * 发问人id
      */
-    private int uId;
+    private int userId;
     /**
      * 标题
      */
@@ -40,15 +40,11 @@ public class Question extends Model<Question> {
     /**
      * 点赞数量
      */
-    private int favour;
-    /**
-     * 收藏数量
-     */
-    private int collect;
+    private int favourNum;
     /**
      * 评论数量
      */
-    private int comment;
+    private int commentNum;
     /**
      * 描述
      */
@@ -74,7 +70,7 @@ public class Question extends Model<Question> {
      */
     private int award;
     /**
-     * 删除状态1:有效；0:无效； 默认1
+     * 删除状态0:有效；1:无效； 默认0
      */
     private int isDelete;
     /**

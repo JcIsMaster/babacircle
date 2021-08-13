@@ -12,12 +12,11 @@ public interface IQuestionService {
     /**
      * 查询所有提问信息
      * @param question
-     * @param userName
      * @param page
      * @param limit
      * @return
      */
-    ResultLayUi queryAllQuestion(Question question, String userName, Integer page, Integer limit);
+    ResultLayUi queryAllQuestion(Question question, Integer page, Integer limit);
 
     /**
      * 删除

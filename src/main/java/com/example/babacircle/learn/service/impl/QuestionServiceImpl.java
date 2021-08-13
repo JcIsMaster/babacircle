@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MQ
@@ -22,18 +24,18 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> implements IQuestionService {
+public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements IQuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
 
     @Override
-    public ResultLayUi queryAllQuestion(Question question, String userName, Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
+    public ResultLayUi queryAllQuestion(Question question, Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
 
-        List<QuestionVo> questionVo = questionMapper.queryAllQuestion();
+        List<QuestionVo> questionVo = questionMapper.queryAllQuestion(question.getTitle());
 
-        int i = questionMapper.countAllQuestion();
+        int i = questionMapper.countAllQuestion(question.getTitle());
 
         ResultLayUi resultLayUi=new ResultLayUi();
         resultLayUi.setCode(0);
@@ -47,7 +49,7 @@ public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> 
     @Override
     public int deleteQuestion(int id) {
         UpdateWrapper<Question> updateWrapper=new UpdateWrapper<>();
-        updateWrapper.eq("id",id).set("is_delete",0);
+        updateWrapper.eq("id",id).set("is_delete",1);
 
         int update = baseMapper.update(null, updateWrapper);
         return update;

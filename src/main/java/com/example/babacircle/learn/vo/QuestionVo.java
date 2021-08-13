@@ -34,17 +34,12 @@ public class QuestionVo {
     /**
      *点赞
      */
-    private int favour;
-
-    /**
-     *收藏
-     */
-    private int collect;
+    private int favourNum;
 
     /**
      *评论
      */
-    private int comment;
+    private int commentNum;
 
     /**
      * 创建时间

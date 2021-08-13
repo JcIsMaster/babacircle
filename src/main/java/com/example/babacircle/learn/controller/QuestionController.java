@@ -32,8 +32,8 @@ public class QuestionController {
     @ApiOperation(value = "查询所有提问信息",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/queryAllQuestion")
-    public ResultLayUi queryAllQuestion(Question question, String userName, Integer page, Integer limit) {
-        return iQuestionService.queryAllQuestion(question,userName,page, limit);
+    public ResultLayUi queryAllQuestion(Question question, Integer page, Integer limit) {
+        return iQuestionService.queryAllQuestion(question,page, limit);
     }
 
     /**
