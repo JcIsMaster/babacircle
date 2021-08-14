@@ -50,14 +50,14 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
         }
 
 
-        List<ResourcesLabelVo> resourcesLabelVos = resourcesMapper.selectResourcesAllPosting(sql);
+        List<ResourcesLabelVo> resourcesLabelVos = resourcesMapper.selectResourcesAllPosting(resources.getTagsOne(),sql);
         for (int i=0;i<resourcesLabelVos.size();i++){
             String[] strings = resourcesMapper.queryImgById(resourcesLabelVos.get(i).getId());
             resourcesLabelVos.get(i).setImg(strings);
         }
 
         //根据不同条件得到不同帖子数量
-        Integer integer = resourcesMapper.selectResourcesAllPostingCount(sql);
+        Integer integer = resourcesMapper.selectResourcesAllPostingCount(resources.getTagsOne(),sql);
 
         ResultLayUi resultLayUi=new ResultLayUi();
         resultLayUi.setCode(0);

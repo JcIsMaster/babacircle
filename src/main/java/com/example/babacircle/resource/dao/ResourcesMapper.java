@@ -19,22 +19,26 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
     /**
      * 后台
      * 查询所有资源数据
+     * @param tagsOne 资源or合作
      * @param sql 条件
      * @return
      */
     @Select("select a.id,a.cover,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
-            "from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where a.is_delete=1 ${sql} order by a.create_at desc")
-    List<ResourcesLabelVo> selectResourcesAllPosting(@Param("sql") String sql);
+            "from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where " +
+            "a.tags_one = ${tagsOne} and a.is_delete=1 ${sql} order by a.create_at desc")
+    List<ResourcesLabelVo> selectResourcesAllPosting(@Param("tagsOne") Integer tagsOne,@Param("sql") String sql);
 
 
 
     /**
      * 根据条件统计数量
+     * @param tagsOne 资源or合作
      * @param sql
      * @return
      */
-    @Select("select COALESCE(count(*),0) from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where a.is_delete=1 ${sql}")
-    Integer selectResourcesAllPostingCount(@Param("sql") String sql);
+    @Select("select COALESCE(count(*),0) from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where " +
+            "a.tags_one = ${tagsOne} and a.is_delete=1 ${sql}")
+    Integer selectResourcesAllPostingCount(@Param("tagsOne") Integer tagsOne,@Param("sql") String sql);
 
     /**
      * 增加资源帖子
@@ -82,6 +86,6 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
      * @param id
      * @return
      */
-    @Delete("delete  from tb_img where z_id=${id} and type=0")
+    @Delete("delete from tb_img where z_id=${id} and type=0")
     int deleteResourceImg(@Param("id") int id);
 }
