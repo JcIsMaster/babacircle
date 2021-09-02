@@ -16,7 +16,7 @@ import java.text.ParseException;
  * @author MQ
  * @date 2021/4/20 14:21
  */
-@Api(tags = "资源API")
+@Api(tags = "资源or合作API")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @Slf4j
@@ -30,14 +30,14 @@ public class ResourcesController {
      * 查询所有资源帖子
      * @return
      */
-    @ApiOperation(value = "查询所有资源帖子",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "查询所有资源or合作帖子",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/selectResourcesAllPosting")
     public ResultLayUi selectResourcesAllPosting(Resources resources, Integer page, Integer limit,String userName) throws ParseException {
         return iResourcesService.selectResourcesAllPosting(resources,page,limit,userName);
     }
 
-    @ApiOperation(value = "根据id查询资源帖子",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "根据id查询资源or合作帖子",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/selectResourcesById")
     public Resources selectResourcesById(int id){
@@ -61,7 +61,7 @@ public class ResourcesController {
      * 增加资源帖子  后台
      * @return
      */
-    @ApiOperation(value = "增加资源帖子",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "增加资源or合作帖子",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/addResourcesPost")
     public int addResourcesPost(Resources resources) {
@@ -70,7 +70,7 @@ public class ResourcesController {
 
     /**
      *
-     * 修改资源帖子  后台
+     * 修改资源or合作帖子  后台
      * @return
      */
     @ApiOperation(value = "修改资源帖子",notes = "成功返回数据 反则为空")

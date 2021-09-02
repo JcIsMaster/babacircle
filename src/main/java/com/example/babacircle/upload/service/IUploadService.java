@@ -1,5 +1,6 @@
 package com.example.babacircle.upload.service;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,13 @@ public interface IUploadService {
      * @return
      */
     Map<String,Object> uploadConimagea(MultipartFile file);
+
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
+    ResultUtil uploadEditImage(MultipartFile file);
 
     /**
      * 删除服务器文件

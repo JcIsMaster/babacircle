@@ -19,9 +19,12 @@ public interface DryCargoMapper extends BaseMapper<DryGoods> {
 
     /**
      * 查询所有干货信息
+     * @Param sql
      * @return
      */
-    @Select("select a.id,a.title,a.favour,a.collect,a.description,a.cover_img,a.content,a.create_at,b.tag_name,c.user_name from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id where a.is_delete=1 ${sql} order by a.create_at desc ")
+    @Select("select a.id,a.title,a.favour,a.collect,a.description,a.cover_img,a.create_at,a.tags_two,b.tag_name,c.user_name from tb_dry_goods a " +
+            "INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id " +
+            "where a.is_delete=1 ${sql} order by a.create_at desc")
     List<DryGoodsVo> queryAllDryCargo(@Param("sql") String sql);
 
     /**
@@ -55,13 +58,5 @@ public interface DryCargoMapper extends BaseMapper<DryGoods> {
      */
     @Select("select COALESCE(count(*),0) from tb_learn_comment where t_type=1 and t_id=${id}")
     int countPostCommentNumber(@Param("id") int id);
-
-    /**
-     * 根据一级标签id查询二级标签
-     * @param tid 一级标签id
-     * @return
-     */
-    @Select("select * from tb_tags where t_id=${tid} and is_delete=1")
-    List<Tag> selectResourcesAllTags(@Param("tid") int tid);
 
 }

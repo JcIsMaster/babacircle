@@ -64,18 +64,6 @@ public class DryCargoController {
     }
 
     /**
-     * 根据一级标签id查询二级标签
-     * @return
-     */
-    @ApiOperation(value = "根据一级标签id查询二级标签",notes = "成功返回数据 反则为空")
-    @ResponseBody
-    @PostMapping("/selectResourcesAllTags")
-    public List<Tag> selectResourcesAllTags(int tid) {
-        List<Tag> tags = iDryCargoService.selectResourcesAllTags(tid);
-        return tags;
-    }
-
-    /**
      * 发布干货帖子信息
      * @return
      */

@@ -37,13 +37,6 @@ public interface IDryCargoService {
     int updateDryCargo(DryGoods dryGoods);
 
     /**
-     *
-     * @param tid
-     * @return
-     */
-    List<Tag> selectResourcesAllTags(int tid);
-
-    /**
      * 发布干货帖子信息
      * @param dryGoods
      * @return

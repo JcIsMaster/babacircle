@@ -1,5 +1,6 @@
 package com.example.babacircle.upload.service.impl;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.upload.service.IUploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.omg.CORBA.portable.ApplicationException;
@@ -62,7 +63,6 @@ public class UploadServiceImpl implements IUploadService {
             //得到上传图片之后的图片
             //图片访问地址
             urlpat="https://www.gofatoo.com/"+visbit+"/"+newfilename+"."+suffixName;
-            System.out.println(urlpat);
             List<String> list=new ArrayList<String>();
             list.add(urlpat);
             mv.put("data", list);
@@ -73,6 +73,49 @@ public class UploadServiceImpl implements IUploadService {
             e.printStackTrace();
             mv.put("success", 1);
             return mv;
+        }
+    }
+
+    @Override
+    public ResultUtil uploadEditImage(MultipartFile file) {
+        String urlpat=null;
+
+        try {
+            ////Calendar.getInstance()是获取一个Calendar对象并可以进行时间的计算，时区的指定
+//            Calendar date = Calendar.getInstance();
+//            //获得文件最初的路径
+//            String originalFile = file.getOriginalFilename();
+            //UUID转化为String对象
+            String newfilename=System.currentTimeMillis()/1000+""+getRandomInt(10000, 99999);
+            String fileName = file.getOriginalFilename();
+            String suffixName = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+            String visbit="img";
+            if(suffixName.equals("AVI")||suffixName.equals("mov")||suffixName.equals("rmvb")||suffixName.equals("FLV")||suffixName.equals("mp4")||suffixName.equals("3GP")){
+                System.out.println("jin");
+                visbit="video";
+            }
+            System.out.println(newfilename);
+            //图片保存的地址
+            Path path = Paths.get("e:/file/"+visbit+"/"+newfilename+"."+suffixName);
+
+
+            //文件不存在就创建
+            if(!Files.isWritable(path)) {
+                Files.createDirectories(Paths.get("e:/file/img"));
+            }
+            //上传图片
+            file.transferTo(path);
+
+            //得到上传图片之后的图片
+            //图片访问地址
+            urlpat="https://www.gofatoo.com/"+visbit+"/"+newfilename+"."+suffixName;
+            List<String> list=new ArrayList<String>();
+            list.add(urlpat);
+            return ResultUtil.success(list,"上传成功",0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error("上传异常");
         }
     }
 

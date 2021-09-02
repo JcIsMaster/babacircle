@@ -3,6 +3,8 @@ package com.example.babacircle.resource.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.babacircle.common.constanct.CodeType;
+import com.example.babacircle.common.exception.ApplicationException;
 import com.example.babacircle.resource.dao.ResourcesMapper;
 import com.example.babacircle.resource.entity.Img;
 import com.example.babacircle.resource.entity.Resources;
@@ -11,7 +13,6 @@ import com.example.babacircle.resource.vo.ResourcesLabelVo;
 import com.example.babacircle.util.ResultLayUi;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,6 +92,10 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
         resources.setCreateAt(System.currentTimeMillis()/1000+"");
 
         int i1 = resourcesMapper.addResourcesPost(resources);
+        if(i1 <= 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"添加资源失败");
+        }
+
 
         if(resources.getType()==0) {
             //添加图片组
@@ -111,15 +116,22 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
     @Override
     public int updateResourcesPost(Resources resources) {
         UpdateWrapper<Resources> updateWrapper=new UpdateWrapper<>();
-        updateWrapper.eq("id",resources.getId()).set("cover",resources.getCover()).set("title",resources.getTitle());
-
+        updateWrapper.eq("id",resources.getId()).set("cover",resources.getCover()).set("title",resources.getTitle()).set("content",resources.getContent())
+        .set("tags_two",resources.getTagsTwo());
         int update = baseMapper.update(null, updateWrapper);
-
+        if(update <= 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"修改失败");
+        }
 
         int i1 = resourcesMapper.deleteResourceImg(resources.getId());
-
+        if(i1 <= 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"删除资源图片失败");
+        }
 
         int i = resourcesMapper.addResourceImg(resources.getId(), resources.getImg(), System.currentTimeMillis() / 1000 + "", 0);
+        if(i <= 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"添加资源图片失败");
+        }
 
         return 1;
     }

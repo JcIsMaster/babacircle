@@ -43,8 +43,8 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
         }
 
 
-        if(!"undefined".equals(dryGoodsVo.getUserName()) && dryGoodsVo.getUserName()!=null){
-            sql=" and c.user_name like '%"+dryGoodsVo.getUserName()+"%'";
+        if(!"undefined".equals(dryGoodsVo.getTagsTwo()) && dryGoodsVo.getTagsTwo()!=0){
+            sql=" and a.tags_two = " + dryGoodsVo.getTagsTwo();
         }
 
         //查询所有
@@ -56,8 +56,8 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
             dryGoodsVos.get(i).setFavour(i1);
 
             //得到收藏数量
-            int i2 = dryCargoMapper.countPostCollectNumber(dryGoodsVos.get(i).getId());
-            dryGoodsVos.get(i).setCollect(i2);
+//            int i2 = dryCargoMapper.countPostCollectNumber(dryGoodsVos.get(i).getId());
+//            dryGoodsVos.get(i).setCollect(i2);
 
             //得到评论数量
             int i3 = dryCargoMapper.countPostCommentNumber(dryGoodsVos.get(i).getId());
@@ -106,11 +106,6 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
         int update = baseMapper.update(null, wrapper);
 
         return update;
-    }
-
-    @Override
-    public List<Tag> selectResourcesAllTags(int tid) {
-        return dryCargoMapper.selectResourcesAllTags(tid);
     }
 
     @Override

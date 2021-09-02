@@ -1,5 +1,6 @@
 package com.example.babacircle.upload.controller;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.upload.service.IUploadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,12 @@ public class UploadController {
     public Map<String,Object> uploadConimagea(MultipartFile file) {
         Map<String, Object> map = iUploadService.uploadConimagea(file);
         return map;
+    }
+
+    @PostMapping("uploadEditImage")
+    @ResponseBody
+    public ResultUtil uploadEditImage(MultipartFile file) {
+        return iUploadService.uploadEditImage(file);
     }
 
     @ApiOperation(value = "删除服务器图片", notes = "删除服务器图片")
