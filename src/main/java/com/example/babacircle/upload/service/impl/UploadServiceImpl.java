@@ -85,26 +85,28 @@ public class UploadServiceImpl implements IUploadService {
             Map<String,Object> map2 = new HashMap<String,Object>();
             //本来就是单图，这个foreach没啥用
             if (!file.isEmpty()) {
-                // 文件原名称
-                String origName=file.getOriginalFilename();
-                System.out.println("上传的文件原名称:"+origName);
-                //类型正确
-                //组合名称
-                String fileSrc="";
-                //是否随机名称
-                origName=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+"_"+UUID.randomUUID().toString()+origName.substring(origName.lastIndexOf("."));
-                //判断是否存在目录
-                String path1 = "e:/file/img";
-                File Fpath1=new File(path1);
-                if(!Fpath1.exists()){
-                    Fpath1.mkdirs();//创建目录
+                //UUID转化为String对象
+                String newfilename=System.currentTimeMillis()/1000+""+getRandomInt(10000, 99999);
+                String fileName = file.getOriginalFilename();
+                String suffixName = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+                String visbit="img";
+                if(suffixName.equals("AVI")||suffixName.equals("mov")||suffixName.equals("rmvb")||suffixName.equals("FLV")||suffixName.equals("mp4")||suffixName.equals("3GP")){
+                    System.out.println("jin");
+                    visbit="video";
                 }
-                //上传
-                System.out.println("正在上传");
-                File targetFile=new File(path1,origName);
-                file.transferTo(targetFile);
-                //完整路径
-                fileSrc="https://www.gofatoo.com/img/163029147468941.jpg";
+                //图片保存的地址
+                Path path = Paths.get("e:/file/"+visbit+"/"+newfilename+"."+suffixName);
+
+
+                //文件不存在就创建
+                if(!Files.isWritable(path)) {
+                    Files.createDirectories(Paths.get("e:/file/img"));
+                }
+                //上传图片
+                file.transferTo(path);
+
+                String fileSrc="https://www.gofatoo.com/"+visbit+"/"+newfilename+"."+suffixName;
                 //0表示成功，1失败
                 System.out.println(1);
                 map.put("code",0);
@@ -114,8 +116,7 @@ public class UploadServiceImpl implements IUploadService {
                 //图片url
                 map2.put("src",fileSrc);
                 //图片名称，这个会显示在输入框里
-                map2.put("title",origName);
-
+                map2.put("title",newfilename);
                 return map;
             }
 
