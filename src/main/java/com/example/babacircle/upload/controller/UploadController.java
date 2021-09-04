@@ -40,7 +40,7 @@ public class UploadController {
 
     @PostMapping("uploadEditImage")
     @ResponseBody
-    public ResultUtil uploadEditImage(MultipartFile file) {
+    public Map<String,Object> uploadEditImage(MultipartFile file) {
         return iUploadService.uploadEditImage(file);
     }
 
@@ -51,7 +51,6 @@ public class UploadController {
 
        return iUploadService.deleteFile(type,imgUrl);
     }
-
 
 
 }

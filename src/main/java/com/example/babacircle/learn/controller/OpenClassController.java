@@ -26,10 +26,10 @@ public class OpenClassController {
 
     /**
      *
-     * 查询所有干货信息
+     * 查询所有公开课信息
      * @return
      */
-    @ApiOperation(value = "查询所有干货信息",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "查询所有公开课信息",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/queryAllOpenClass")
     public ResultLayUi queryAllOpenClass(PublicClass publicClass,String userName, Integer page, Integer limit) {
@@ -37,10 +37,10 @@ public class OpenClassController {
     }
     /**
      *
-     * 查询所有干货信息
+     * 删除公开课信息
      * @return
      */
-    @ApiOperation(value = "查询所有干货信息",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "删除公开课信息",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/delOpenClass")
     public int delOpenClass(int id)  {

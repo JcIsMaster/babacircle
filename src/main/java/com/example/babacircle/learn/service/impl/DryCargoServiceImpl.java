@@ -3,6 +3,8 @@ package com.example.babacircle.learn.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.babacircle.common.constanct.CodeType;
+import com.example.babacircle.common.exception.ApplicationException;
 import com.example.babacircle.learn.dao.DryCargoMapper;
 import com.example.babacircle.learn.entity.DryGoods;
 import com.example.babacircle.learn.entity.Tag;
@@ -28,7 +30,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> implements IDryCargoService {
+public class DryCargoServiceImpl extends ServiceImpl<DryCargoMapper, DryGoods> implements IDryCargoService {
 
     @Autowired
     private DryCargoMapper dryCargoMapper;
@@ -46,7 +48,6 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
         if(!"undefined".equals(dryGoodsVo.getTagsTwo()) && dryGoodsVo.getTagsTwo()!=0){
             sql=" and a.tags_two = " + dryGoodsVo.getTagsTwo();
         }
-
         //查询所有
         PageHelper.startPage(page,limit);
         List<DryGoodsVo> dryGoodsVos = dryCargoMapper.queryAllDryCargo(sql);
@@ -111,12 +112,15 @@ public class DryCargoServiceImpl  extends ServiceImpl<DryCargoMapper, DryGoods> 
     @Override
     public int releaseDryCargo(DryGoods dryGoods) {
         if(dryGoods.getUId()==0 || dryGoods.getTagsTwo()==0){
-            return 0;
+            throw new ApplicationException(CodeType.PARAMETER_ERROR,"参数错误！");
         }
 
         dryGoods.setIsDelete(1);
         dryGoods.setCreateAt(System.currentTimeMillis()/1000+"");
         int insert = baseMapper.insert(dryGoods);
+        if (insert == 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"新增失败！");
+        }
         return insert;
     }
 }

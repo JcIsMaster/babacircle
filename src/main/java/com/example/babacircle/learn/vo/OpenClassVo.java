@@ -42,9 +42,14 @@ public class OpenClassVo {
     private int price;
 
     /**
-     * 收藏数量
+     * 课程详情介绍
      */
-    private int collect;
+    private String description;
+
+    /**
+     * 免费观看时长（默认为0）
+     */
+    private int freeTime;
 
     /**
      * 公开课购买人数

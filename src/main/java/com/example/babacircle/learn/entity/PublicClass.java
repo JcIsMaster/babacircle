@@ -61,6 +61,16 @@ public class PublicClass extends Model<PublicClass> {
     private int price;
 
     /**
+     * 课程详情介绍
+     */
+    private String description;
+
+    /**
+     * 免费观看时长（默认为0）
+     */
+    private int freeTime;
+
+    /**
      * 收藏数量
      */
     private int collect;

@@ -12,6 +12,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -77,46 +78,51 @@ public class UploadServiceImpl implements IUploadService {
     }
 
     @Override
-    public ResultUtil uploadEditImage(MultipartFile file) {
-        String urlpat=null;
-
+    public Map<String,Object> uploadEditImage(MultipartFile file) {
         try {
-            ////Calendar.getInstance()是获取一个Calendar对象并可以进行时间的计算，时区的指定
-//            Calendar date = Calendar.getInstance();
-//            //获得文件最初的路径
-//            String originalFile = file.getOriginalFilename();
-            //UUID转化为String对象
-            String newfilename=System.currentTimeMillis()/1000+""+getRandomInt(10000, 99999);
-            String fileName = file.getOriginalFilename();
-            String suffixName = fileName.substring(fileName.lastIndexOf(".") + 1);
+            //两个Map用于返回规定格式参数
+            Map<String,Object> map = new HashMap<String,Object>();
+            Map<String,Object> map2 = new HashMap<String,Object>();
+            //本来就是单图，这个foreach没啥用
+            if (!file.isEmpty()) {
+                // 文件原名称
+                String origName=file.getOriginalFilename();
+                System.out.println("上传的文件原名称:"+origName);
+                //类型正确
+                //组合名称
+                String fileSrc="";
+                //是否随机名称
+                origName=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+"_"+UUID.randomUUID().toString()+origName.substring(origName.lastIndexOf("."));
+                //判断是否存在目录
+                String path1 = "e:/file/img";
+                File Fpath1=new File(path1);
+                if(!Fpath1.exists()){
+                    Fpath1.mkdirs();//创建目录
+                }
+                //上传
+                System.out.println("正在上传");
+                File targetFile=new File(path1,origName);
+                file.transferTo(targetFile);
+                //完整路径
+                fileSrc="https://www.gofatoo.com/img/163029147468941.jpg";
+                //0表示成功，1失败
+                System.out.println(1);
+                map.put("code",0);
+                //提示消息
+                map.put("msg","上传成功");
+                map.put("data",map2);
+                //图片url
+                map2.put("src",fileSrc);
+                //图片名称，这个会显示在输入框里
+                map2.put("title",origName);
 
-            String visbit="img";
-            if(suffixName.equals("AVI")||suffixName.equals("mov")||suffixName.equals("rmvb")||suffixName.equals("FLV")||suffixName.equals("mp4")||suffixName.equals("3GP")){
-                System.out.println("jin");
-                visbit="video";
+                return map;
             }
-            System.out.println(newfilename);
-            //图片保存的地址
-            Path path = Paths.get("e:/file/"+visbit+"/"+newfilename+"."+suffixName);
 
-
-            //文件不存在就创建
-            if(!Files.isWritable(path)) {
-                Files.createDirectories(Paths.get("e:/file/img"));
-            }
-            //上传图片
-            file.transferTo(path);
-
-            //得到上传图片之后的图片
-            //图片访问地址
-            urlpat="https://www.gofatoo.com/"+visbit+"/"+newfilename+"."+suffixName;
-            List<String> list=new ArrayList<String>();
-            list.add(urlpat);
-            return ResultUtil.success(list,"上传成功",0);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultUtil.error("上传异常");
         }
+        return null;
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.example.babacircle.learn.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.babacircle.common.constanct.CodeType;
+import com.example.babacircle.common.exception.ApplicationException;
 import com.example.babacircle.learn.dao.DryCargoMapper;
 import com.example.babacircle.learn.dao.OpenClassMapper;
 import com.example.babacircle.learn.entity.DryGoods;
@@ -62,7 +64,9 @@ public class OpenClassServiceImpl extends ServiceImpl<OpenClassMapper, PublicCla
         updateWrapper.eq("id",id).set("is_delete",0);
 
         int update = baseMapper.update(null, updateWrapper);
-
+        if (update == 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"删除课程失败");
+        }
 
         return update;
     }
@@ -73,7 +77,9 @@ public class OpenClassServiceImpl extends ServiceImpl<OpenClassMapper, PublicCla
         publicClass.setTagsOne(15);
         publicClass.setIsDelete(1);
         int insert = baseMapper.insert(publicClass);
-
+        if (insert == 0){
+            throw new ApplicationException(CodeType.SERVICE_ERROR,"新增课程失败");
+        }
         return insert;
     }
 

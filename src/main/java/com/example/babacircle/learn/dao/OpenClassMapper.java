@@ -22,13 +22,13 @@ public interface OpenClassMapper extends BaseMapper<PublicClass> {
      * @param sql
      * @return
      */
-    @Select("select a.id,a.title,a.cover_img,a.class_list,a.price,a.collect,a.buyer_num,a.create_at,b.tag_name,c.user_name,c.id as userId " +
+    @Select("select a.id,a.title,a.cover_img,a.class_list,a.price,a.description,a.buyer_num,a.free_time,a.create_at,b.tag_name,c.user_name,c.id as userId " +
             "from tb_public_class a INNER JOIN tb_tags b on a.tags_two=b.id INNER JOIN tb_user c on a.u_id=c.id " +
             "where a.is_delete=1 ${sql} ORDER BY a.create_at desc ")
     List<OpenClassVo> queryAllOpenClass(@Param("sql") String sql);
 
     /**
-     * 统计所有公开课新
+     * 统计所有公开课
      * @param sql
      * @return
      */

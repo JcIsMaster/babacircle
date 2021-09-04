@@ -53,7 +53,7 @@ public class ResultUtil implements Serializable {
      * @return Result
      */
     public static ResultUtil success(Object data, String msg,Integer code){
-        return new ResultUtil(code,msg,null);
+        return new ResultUtil(code,msg,data);
     }
  
     /**

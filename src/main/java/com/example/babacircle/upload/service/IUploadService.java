@@ -24,7 +24,7 @@ public interface IUploadService {
      * @param file
      * @return
      */
-    ResultUtil uploadEditImage(MultipartFile file);
+    Map<String,Object> uploadEditImage(MultipartFile file);
 
     /**
      * 删除服务器文件
