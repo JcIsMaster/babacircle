@@ -1,5 +1,6 @@
 package com.example.babacircle.resource.service;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.resource.entity.Resources;
 import com.example.babacircle.util.ResultLayUi;
 
@@ -49,4 +50,14 @@ public interface IResourcesService {
      * @return
      */
     int updateResourcesPost(Resources resources);
+
+    /**
+     * 查询用户发布的资源or合作帖子
+     * @param type
+     * @param userId
+     * @param page
+     * @param limit
+     * @return
+     */
+    ResultUtil queryResourcesPostingByUserId(int type, int userId, Integer page, Integer limit);
 }

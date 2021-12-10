@@ -3,6 +3,7 @@ package com.example.babacircle.tags.controller;
 
 import com.example.babacircle.tags.entity.Tag;
 import com.example.babacircle.tags.service.ITagService;
+import com.example.babacircle.tags.vo.TagCircleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +30,14 @@ public class TagController {
 
 
     /**
-     * 根据参数类型查询不同类型的标签
+     * 查询所有圈子
      * @return
      */
-    @ApiOperation(value = "根据参数类型查询不同类型的标签",notes = "成功返回数据 反则为空")
+    @ApiOperation(value = "查询所有圈子",notes = "成功返回数据 反则为空")
     @ResponseBody
     @PostMapping("/selectResourcesTag")
-    public List<Tag> selectResourcesTag(int type) {
-        List<Tag> tags = iTagService.selectResourcesAllTag(type);
+    public List<TagCircleVo> selectResourcesTag() {
+        List<TagCircleVo> tags = iTagService.selectResourcesAllTag();
         return tags;
     }
 
@@ -53,8 +54,16 @@ public class TagController {
         return tags;
     }
 
-
-
+    /**
+     * 查询我可以发帖的圈子
+     * @return
+     */
+    @ApiOperation(value = "查询我可以发帖的圈子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/selectTagsCircleMyCan")
+    public List<TagCircleVo> selectTagsCircleMyCan(int userId){
+        return iTagService.selectTagsCircleMyCan(userId);
+    }
 
 
 }

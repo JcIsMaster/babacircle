@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.babacircle.common.constanct.CodeType;
 import com.example.babacircle.common.exception.ApplicationException;
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.learn.dao.DryCargoMapper;
 import com.example.babacircle.learn.dao.OpenClassMapper;
 import com.example.babacircle.learn.entity.DryGoods;
@@ -81,6 +82,17 @@ public class OpenClassServiceImpl extends ServiceImpl<OpenClassMapper, PublicCla
             throw new ApplicationException(CodeType.SERVICE_ERROR,"新增课程失败");
         }
         return insert;
+    }
+
+    @Override
+    public ResultUtil queryOpenClassByUserId(int userId, Integer page, Integer limit) {
+        if (userId == 0) {
+            return ResultUtil.error("参数异常!");
+        }
+        PageHelper.startPage(page,limit);
+        List<OpenClassVo> openClassVos = openClassMapper.queryOpenClassByUserId(userId);
+        int i = openClassMapper.countOpenClassByUserId(userId);
+        return ResultUtil.success(openClassVos,i);
     }
 
 

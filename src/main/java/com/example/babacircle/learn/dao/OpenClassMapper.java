@@ -36,4 +36,23 @@ public interface OpenClassMapper extends BaseMapper<PublicClass> {
             "where a.is_delete=1 ${sql} ")
     int countAllOpenClass(@Param("sql") String sql);
 
+    /**
+     * 查询用户发布的公开课信息
+     * @param userId
+     * @return
+     */
+    @Select("select a.id,a.title,a.cover_img,a.class_list,a.price,a.description,a.buyer_num,a.free_time,a.create_at,b.tag_name,c.user_name,c.id as userId " +
+            "from tb_public_class a INNER JOIN tb_tags b on a.tags_two=b.id INNER JOIN tb_user c on a.u_id=c.id " +
+            "where a.is_delete=1 and a.u_id = ${userId} ORDER BY a.create_at desc")
+    List<OpenClassVo> queryOpenClassByUserId(@Param("userId") int userId);
+
+    /**
+     * 查询用户发布的公开课数量
+     * @param userId
+     * @return
+     */
+    @Select("select COALESCE(count(*),0) from tb_public_class a INNER JOIN tb_tags b on a.tags_two=b.id INNER JOIN tb_user c on a.u_id=c.id " +
+            "where a.is_delete = 1 and a.u_id = ${userId}")
+    int countOpenClassByUserId(@Param("userId") int userId);
+
 }

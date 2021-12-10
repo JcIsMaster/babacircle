@@ -28,8 +28,6 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
             "a.tags_one = ${tagsOne} and a.is_delete=1 ${sql} order by a.create_at desc")
     List<ResourcesLabelVo> selectResourcesAllPosting(@Param("tagsOne") Integer tagsOne,@Param("sql") String sql);
 
-
-
     /**
      * 根据条件统计数量
      * @param tagsOne 资源or合作
@@ -45,7 +43,9 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
      * @param resources
      * @return
      */
-    @Insert("insert into tb_resources(content,tags_one,tags_two,type,video,cover,create_at,u_id,title)values(#{resources.content},${resources.tagsOne},${resources.tagsTwo},${resources.type},#{resources.video},#{resources.cover},#{resources.createAt},${resources.uId},#{resources.title})")
+    @Insert("insert into tb_resources(content,tags_one,tags_two,type,video,cover,create_at,u_id,title,supply_or_demand)values(#{resources.content}," +
+            "${resources.tagsOne},${resources.tagsTwo},${resources.type},#{resources.video},#{resources.cover},#{resources.createAt}," +
+            "${resources.uId},#{resources.title},${resources.supplyOrDemand})")
     @Options(useGeneratedKeys=true, keyProperty="resources.id",keyColumn="id")
     int addResourcesPost(@Param("resources") Resources resources);
 
@@ -88,4 +88,25 @@ public interface ResourcesMapper extends BaseMapper<Resources> {
      */
     @Delete("delete from tb_img where z_id=${id} and type=0")
     int deleteResourceImg(@Param("id") int id);
+
+    /**
+     * 后台
+     * 查询我发布资源/合作帖子
+     * @param tagsOne 资源or合作
+     * @param userId 用户id
+     * @return
+     */
+    @Select("select a.id,a.cover,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
+            "from tb_resources a INNER JOIN tb_user c on a.u_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where " +
+            "a.tags_one = ${tagsOne} and a.is_delete=1 and a.u_id = ${userId} order by a.create_at desc")
+    List<ResourcesLabelVo> selectResourcesPostingByUserId(@Param("tagsOne") Integer tagsOne,@Param("userId") int userId);
+
+    /**
+     * 查询我发布资源/合作帖子数量
+     * @param userId 用户id
+     * @param tagId 分类id
+     * @return
+     */
+    @Select("select count(*) from tb_resources where u_id=${userId} and tags_one=${tagId} and is_delete=1")
+    int queryMyPostedPostsCount(@Param("userId") int userId,@Param("tagId") int tagId);
 }

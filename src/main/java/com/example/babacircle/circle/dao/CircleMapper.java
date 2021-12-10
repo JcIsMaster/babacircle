@@ -21,6 +21,7 @@ public interface CircleMapper extends BaseMapper<Circle> {
     /**
      * 根据条件查询所有圈子
      * @param sql 条件拼接
+     * @param circle
      * @return
      */
     @Select({"<script>"+
@@ -37,6 +38,7 @@ public interface CircleMapper extends BaseMapper<Circle> {
     /**
      * 根据条件统计数量
      * @param sql
+     * @param tagsTwo
      * @return
      */
     @Select({"<script>"+
@@ -134,4 +136,47 @@ public interface CircleMapper extends BaseMapper<Circle> {
      */
     @Select("select img_url from tb_img where z_id=${id} and type=1")
     String[] selectImgByPostId(@Param("id") int id);
+
+    /**
+     * 删除资源 圈子
+     * @param id 标签id
+     * @return
+     */
+    @Update("update tb_circles set is_delete = 0 where tags_two=${id}")
+    int deletePosts(@Param("id") int id);
+
+    /**
+     * 查询用户创建的圈子的数量
+     * @param userId
+     * @return
+     */
+    @Select("select count(id) from tb_community where user_id = ${userId} and is_delete = 1")
+    int queryCircleCountByUserId(@Param("userId") int userId);
+
+    /**
+     * 根据用户id查询圈子文章数量
+     * @param userId 用户id
+     * @return
+     */
+    @Select("select count(a.id) from tb_circles a INNER JOIN tb_user c on a.user_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id where a.user_id=${userId} and a.is_delete=1")
+    int queryHavePostedCircleNum(@Param("userId") int userId);
+
+    /**
+     * 查询用户发的帖子
+     * @param userId
+     * @return
+     */
+    @Select("select a.cover,a.id,a.content,b.tag_name,a.type,a.video,a.favour,a.collect,a.browse,a.title,a.create_at,c.avatar,c.id as uId,c.user_name " +
+            "from tb_circles a INNER JOIN tb_user c on a.user_id=c.id INNER JOIN tb_tags b on a.tags_two=b.id " +
+            "where a.is_delete=1 and c.id = ${userId} order by a.create_at desc")
+    List<CircleLabelVo> selectPostsByUserId(@Param("userId") int userId);
+
+    /**
+     * 查询用户发的帖子数量
+     * @param userId
+     * @return
+     */
+    @Select("select count(1) from tb_circles a INNER JOIN tb_user c on a.user_id = c.id " +
+            "where a.is_delete = 1 and c.id = ${userId}")
+    int selectPostsNumByUserId(@Param("userId") int userId);
 }

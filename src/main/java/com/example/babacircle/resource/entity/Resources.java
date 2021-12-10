@@ -87,6 +87,11 @@ public class Resources extends Model<Resources> {
     private int browse;
 
     /**
+     * 0.供货or1.找货
+     */
+    private int supplyOrDemand;
+
+    /**
      * 创建时间
      */
     private String createAt;

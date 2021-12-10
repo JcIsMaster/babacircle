@@ -1,5 +1,6 @@
 package com.example.babacircle.resource.controller;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.resource.entity.Resources;
 import com.example.babacircle.resource.service.IResourcesService;
 import com.example.babacircle.util.ResultLayUi;
@@ -78,6 +79,17 @@ public class ResourcesController {
     @PostMapping("/updateResourcesPost")
     public int updateResourcesPost(Resources resources){
         return iResourcesService.updateResourcesPost(resources);
+    }
+
+    /**
+     * 查询用户发布的资源or合作帖子
+     * @return
+     */
+    @ApiOperation(value = "查询用户发布的资源or合作帖子",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/queryResourcesPostingByUserId")
+    public ResultUtil queryResourcesPostingByUserId(int type, int userId, Integer page, Integer limit) {
+        return iResourcesService.queryResourcesPostingByUserId(type,userId,page,limit);
     }
 
 }

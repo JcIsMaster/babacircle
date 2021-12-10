@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.babacircle.common.constanct.CodeType;
 import com.example.babacircle.common.exception.ApplicationException;
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.learn.dao.DryCargoMapper;
 import com.example.babacircle.learn.entity.DryGoods;
 import com.example.babacircle.learn.entity.Tag;
@@ -122,5 +123,24 @@ public class DryCargoServiceImpl extends ServiceImpl<DryCargoMapper, DryGoods> i
             throw new ApplicationException(CodeType.SERVICE_ERROR,"新增失败！");
         }
         return insert;
+    }
+
+    @Override
+    public ResultUtil queryAllDryCargoByUserId(int userId, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<DryGoodsVo> dryGoodsVos = dryCargoMapper.queryAllDryCargoByUserId(userId);
+        for (int i=0;i<dryGoodsVos.size();i++){
+            //得到点赞数量
+            int i1 = dryCargoMapper.countPostGiveNumber(dryGoodsVos.get(i).getId());
+            dryGoodsVos.get(i).setFavour(i1);
+
+            //得到评论数量
+            int i3 = dryCargoMapper.countPostCommentNumber(dryGoodsVos.get(i).getId());
+            dryGoodsVos.get(i).setCommentNumber(i3);
+        }
+
+        //统计
+        int i = dryCargoMapper.countAllDryCargoByUserId(userId);
+        return ResultUtil.success(dryGoodsVos,i);
     }
 }

@@ -19,7 +19,7 @@ public interface DryCargoMapper extends BaseMapper<DryGoods> {
 
     /**
      * 查询所有干货信息
-     * @Param sql
+     * @param sql
      * @return
      */
     @Select("select a.id,a.title,a.favour,a.collect,a.description,a.cover_img,a.create_at,a.tags_two,b.tag_name,c.user_name from tb_dry_goods a " +
@@ -58,5 +58,24 @@ public interface DryCargoMapper extends BaseMapper<DryGoods> {
      */
     @Select("select COALESCE(count(*),0) from tb_learn_comment where t_type=1 and t_id=${id}")
     int countPostCommentNumber(@Param("id") int id);
+
+    /**
+     * 查询用户发布的干货信息
+     * @param userId
+     * @return
+     */
+    @Select("select a.id,a.title,a.favour,a.collect,a.description,a.cover_img,a.create_at,a.tags_two,b.tag_name,c.user_name from tb_dry_goods a " +
+            "INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id " +
+            "where a.is_delete = 1 and a.u_id = ${userId} order by a.create_at desc")
+    List<DryGoodsVo> queryAllDryCargoByUserId(@Param("userId") int userId);
+
+    /**
+     * 统计用户发布的干货数量
+     * @param userId
+     * @return
+     */
+    @Select("select COALESCE(count(*),0) from tb_dry_goods a INNER JOIN tb_tags b on a.tags_two=b.id inner join tb_user c on a.u_id=c.id " +
+            "where a.is_delete = 1 and a.u_id = ${userId}")
+    int countAllDryCargoByUserId(@Param("userId") int userId);
 
 }

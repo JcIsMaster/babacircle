@@ -3,6 +3,7 @@ package com.example.babacircle.tags.service;
 
 
 import com.example.babacircle.tags.entity.Tag;
+import com.example.babacircle.tags.vo.TagCircleVo;
 
 import java.util.List;
 
@@ -14,11 +15,10 @@ public interface ITagService {
 
 
     /**
-     * 查询所有圈子一级标签
-     * @param type 0 资源 1圈子
+     * 查询所有圈子
      * @return
      */
-    List<Tag> selectResourcesAllTag(int type);
+    List<TagCircleVo> selectResourcesAllTag();
 
     /**
      * 根据一级标签id查询二级标签
@@ -27,6 +27,11 @@ public interface ITagService {
      */
     List<Tag> selectResourcesAllTags(int tid);
 
-
+    /**
+     * 查询我可以发帖的圈子
+     * @param userId
+     * @return
+     */
+    List<TagCircleVo> selectTagsCircleMyCan(int userId);
 
 }

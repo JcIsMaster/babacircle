@@ -49,7 +49,7 @@ public class UploadServiceImpl implements IUploadService {
                 System.out.println("jin");
                 visbit="video";
             }
-            System.out.println(newfilename);
+//            System.out.println(newfilename);
             //图片保存的地址
             Path path = Paths.get("e:/file/"+visbit+"/"+newfilename+"."+suffixName);
 

@@ -1,6 +1,7 @@
 package com.example.babacircle.user.controller;
 
 import com.example.babacircle.user.entity.User;
+import com.example.babacircle.user.entity.UserAdmin;
 import com.example.babacircle.user.service.IUserService;
 import com.example.babacircle.user.vo.UserHtVo;
 import com.example.babacircle.util.ResultLayUi;
@@ -63,13 +64,28 @@ public class UserController {
     @ResponseBody
     @PostMapping("/updateUser")
     public int updateUser(User user) {
-        System.out.println(user.toString());
-        System.out.println(iUserService.updateUser(user));
         return iUserService.updateUser(user);
     }
 
+    @ApiOperation(value = "添加管理员（开放）用户", notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/addAdminUser")
+    public int addAdminUser(UserAdmin userAdmin){
+        return iUserService.addAdminUser(userAdmin);
+    }
 
+    @ApiOperation(value = "修改管理员用户权限、关联", notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/updateAdminUserAuthority")
+    public int updateAdminUserAuthority(UserAdmin userAdmin){
+        return iUserService.updateAdminUserAuthority(userAdmin);
+    }
 
-
+    @ApiOperation(value = "查询管理员用户列表", notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/queryUserAdminList")
+    public ResultLayUi queryUserAdminList(String account, Integer role, Integer page, Integer limit){
+        return iUserService.queryUserAdminList(account,role,page,limit);
+    }
 
 }

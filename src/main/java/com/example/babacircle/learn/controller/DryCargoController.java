@@ -1,5 +1,6 @@
 package com.example.babacircle.learn.controller;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.learn.entity.DryGoods;
 import com.example.babacircle.learn.entity.Tag;
 import com.example.babacircle.learn.service.IDryCargoService;
@@ -74,6 +75,15 @@ public class DryCargoController {
         return iDryCargoService.releaseDryCargo(dryGoods);
     }
 
-
+    /**
+     * 查询用户发布的干货信息
+     * @return
+     */
+    @ApiOperation(value = "查询用户发布的干货信息",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/queryAllDryCargoByUserId")
+    public ResultUtil queryAllDryCargoByUserId(int userId, Integer page, Integer limit) {
+        return iDryCargoService.queryAllDryCargoByUserId(userId, page, limit);
+    }
 
 }

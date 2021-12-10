@@ -1,5 +1,6 @@
 package com.example.babacircle.learn.controller;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.learn.entity.PublicClass;
 import com.example.babacircle.learn.service.IOpenClassService;
 import com.example.babacircle.learn.vo.DryGoodsVo;
@@ -25,7 +26,6 @@ public class OpenClassController {
      private IOpenClassService iOpenClassService;
 
     /**
-     *
      * 查询所有公开课信息
      * @return
      */
@@ -35,6 +35,7 @@ public class OpenClassController {
     public ResultLayUi queryAllOpenClass(PublicClass publicClass,String userName, Integer page, Integer limit) {
         return iOpenClassService.queryAllOpenClass(publicClass,userName,page, limit);
     }
+
     /**
      *
      * 删除公开课信息
@@ -57,6 +58,17 @@ public class OpenClassController {
     @PostMapping("/addOpenClass")
     public int addOpenClass(PublicClass publicClass)  {
         return iOpenClassService.addOpenClass(publicClass);
+    }
+
+    /**
+     * 查询用户发布的公开课信息
+     * @return
+     */
+    @ApiOperation(value = "查询用户发布的公开课信息",notes = "成功返回数据 反则为空")
+    @ResponseBody
+    @PostMapping("/queryOpenClassByUserId")
+    public ResultUtil queryOpenClassByUserId(int userId, Integer page, Integer limit) {
+        return iOpenClassService.queryOpenClassByUserId(userId,page, limit);
     }
 
 }

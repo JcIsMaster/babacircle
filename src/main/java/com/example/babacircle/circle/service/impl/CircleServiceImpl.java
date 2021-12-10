@@ -177,4 +177,13 @@ public class CircleServiceImpl extends ServiceImpl<CircleMapper, Circle> impleme
         circleClassificationVo.setImg(strings);
         return circleClassificationVo;
     }
+
+    @Override
+    public ResultLayUi queryPostsByUserId(int userId, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<CircleLabelVo> circleLabelVos = circleMapper.selectPostsByUserId(userId);
+        int count = circleMapper.selectPostsNumByUserId(userId);
+        ResultLayUi resultLayUi = new ResultLayUi(200,count,circleLabelVos,"success");
+        return resultLayUi;
+    }
 }

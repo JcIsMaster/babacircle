@@ -28,10 +28,13 @@ public class ResultLayUi{
 	 */
 	private String msg;
 
+	public ResultLayUi() {
+	}
 
-
-
-    
-    
-
+	public ResultLayUi(Integer code, int count, Object data, String msg) {
+		this.code = code;
+		this.count = count;
+		this.data = data;
+		this.msg = msg;
+	}
 }

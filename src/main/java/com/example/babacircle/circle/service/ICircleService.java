@@ -1,6 +1,7 @@
 package com.example.babacircle.circle.service;
 
 import com.example.babacircle.circle.entity.Circle;
+import com.example.babacircle.circle.entity.Community;
 import com.example.babacircle.circle.entity.Haplont;
 import com.example.babacircle.circle.vo.CircleClassificationVo;
 import com.example.babacircle.util.ResultLayUi;
@@ -64,5 +65,14 @@ public interface ICircleService {
      * @return
      */
     CircleClassificationVo querySingleCircle(int id);
+
+    /**
+     * 查询用户发的所有帖子
+     * @param userId
+     * @param page
+     * @param limit
+     * @return
+     */
+    ResultLayUi queryPostsByUserId(int userId,Integer page, Integer limit);
 
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.babacircle.common.constanct.CodeType;
 import com.example.babacircle.common.exception.ApplicationException;
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.resource.dao.ResourcesMapper;
 import com.example.babacircle.resource.entity.Img;
 import com.example.babacircle.resource.entity.Resources;
@@ -134,5 +135,20 @@ public class ResourcesServiceImpl extends ServiceImpl<ResourcesMapper, Resources
         }
 
         return 1;
+    }
+
+    @Override
+    public ResultUtil queryResourcesPostingByUserId(int type, int userId, Integer page, Integer limit) {
+        if (userId == 0) {
+            return ResultUtil.error("参数异常!");
+        }
+        PageHelper.startPage(page,limit);
+        List<ResourcesLabelVo> resourcesLabelVos = resourcesMapper.selectResourcesPostingByUserId(type, userId);
+        for (int i=0;i<resourcesLabelVos.size();i++){
+            String[] strings = resourcesMapper.queryImgById(resourcesLabelVos.get(i).getId());
+            resourcesLabelVos.get(i).setImg(strings);
+        }
+        int count = resourcesMapper.queryMyPostedPostsCount(userId, type);
+        return ResultUtil.success(resourcesLabelVos,count);
     }
 }

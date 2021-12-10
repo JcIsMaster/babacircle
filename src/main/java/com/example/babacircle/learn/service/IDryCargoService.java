@@ -1,5 +1,6 @@
 package com.example.babacircle.learn.service;
 
+import com.example.babacircle.common.utils.ResultUtil;
 import com.example.babacircle.learn.entity.DryGoods;
 import com.example.babacircle.learn.entity.Tag;
 import com.example.babacircle.learn.vo.DryGoodsVo;
@@ -42,4 +43,13 @@ public interface IDryCargoService {
      * @return
      */
     int releaseDryCargo(DryGoods dryGoods);
+
+    /**
+     * 查询用户发布的干货信息
+     * @param userId
+     * @param page
+     * @param limit
+     * @return
+     */
+    ResultUtil queryAllDryCargoByUserId(int userId, Integer page, Integer limit);
 }

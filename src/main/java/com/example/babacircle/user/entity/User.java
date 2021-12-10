@@ -24,7 +24,7 @@ public class User extends Model<User> {
 	/**
 	 * 用户表名称
 	 */
-	String  userName ;
+	String userName ;
 
 	/**
 	 * 性别
